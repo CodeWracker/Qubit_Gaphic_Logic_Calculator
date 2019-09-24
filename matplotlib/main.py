@@ -16,15 +16,41 @@ x = np.outer(np.cos(u), np.sin(v))
 y = np.outer(np.sin(u), np.sin(v))
 z = np.outer(np.ones(np.size(u)), np.cos(v))
 
-#|a> = cos(teta/2)|0> + e^iro *sin(teta/2) |1>                                                                                                                                          
-#teta = 90-arcsin(c/b)
-#ro = 90-arsin(a/b)
 '''
-cos((pi/2 - arcsin(c/b))/2 ) = val|0>
-arccos(val|0>) = (pi/2 - arcsin(c/b))/2
-arcsin(c/b) = pi/2 - 2*arccos(val|0>)
-c/b = sin(pi/2 - arcos(val|0>))
-
-e^i(pi/2 - arcsin(a/b)) * sin((pi/2 - arcsin(c/b)/2)) = val|1>
-
+    |Qb> = a|0> + b|1>
+    teta = 2arcos( arg(a) ) = 2arcos( sqrt(a^2 + b^2) )
+    ro = arg(b) - arg(a) = sqrt(c^2 +d^2)-sqrt(a^2 + b^2)
+    epson = arg(a )= sqrt(a^2 + b^2)
+    x = cos(ro)sen(teta)
+    y = sen(ro)sen(teta)
+    z = cos(teta)
 '''
+qubit = []
+print("|y> = (a+ib)|0> + (c+id)|1>")
+qubit.append(float(input("a")))
+qubit.append(float(input("b")))
+qubit.append(float(input("c")))
+qubit.append(float(input("c")))
+teta = 2* np.arccos( math.sqrt(math.pow(qubit[0],2) + math.pow(qubit[1],2)) )
+ro = math.sqrt(math.pow(qubit[2],2) +math.pow(qubit[3],2))- math.sqrt(math.pow(qubit[0],2) + math.pow(qubit[1],2))
+epson =  math.sqrt(math.pow(qubit[0],2) + math.pow(qubit[1],2))
+Bx = np.cos(ro)*np.sin(teta)
+By = np.sin(ro)*np.sin(teta)
+Bz = np.cos(teta)
+print(Bx)
+print(By)
+print(Bz)
+print()
+print(teta)
+print(ro)
+print(qubit)
+lineX = np.linspace(0,Bx,100)
+lineY = np.linspace(0,By,100)
+lineZ = np.linspace(0,Bz,100)
+# Plot the surface
+ax.plot_surface(x, y, z,rstride=4,cstride=4,alpha=0.3)
+ax.plot(lineX, lineY, lineZ)
+plt.pause(1)
+plt.xlabel('x')
+plt.ylabel('y')
+plt.show()
