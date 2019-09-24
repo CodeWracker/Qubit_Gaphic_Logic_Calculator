@@ -1,10 +1,22 @@
 # This import registers the 3D projection, but is otherwise unused.
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
-
+from porta import *
 import matplotlib.pyplot as plt
 import numpy as np
 import math
 import cmath
+
+def transformaQubit(qubit):
+    teta = 2* np.arccos( math.sqrt(math.pow(qubit[0],2) + math.pow(qubit[1],2)) )
+    ro = math.sqrt(math.pow(qubit[2],2) +math.pow(qubit[3],2))- math.sqrt(math.pow(qubit[0],2) + math.pow(qubit[1],2))
+    epson =  math.sqrt(math.pow(qubit[0],2) + math.pow(qubit[1],2))
+    Bx = np.cos(ro)*np.sin(teta)
+    By = np.sin(ro)*np.sin(teta)
+    Bz = np.cos(teta)
+    print(teta)
+    print(ro)
+    print(qubit)
+    return(Bx,By,Bz)
 
 fig = plt.figure(figsize=(10,10))
 ax = fig.gca(projection='3d')
@@ -27,30 +39,35 @@ z = np.outer(np.ones(np.size(u)), np.cos(v))
 '''
 qubit = []
 print("|y> = (a+ib)|0> + (c+id)|1>")
-qubit.append(float(input("a")))
-qubit.append(float(input("b")))
-qubit.append(float(input("c")))
-qubit.append(float(input("c")))
-teta = 2* np.arccos( math.sqrt(math.pow(qubit[0],2) + math.pow(qubit[1],2)) )
-ro = math.sqrt(math.pow(qubit[2],2) +math.pow(qubit[3],2))- math.sqrt(math.pow(qubit[0],2) + math.pow(qubit[1],2))
-epson =  math.sqrt(math.pow(qubit[0],2) + math.pow(qubit[1],2))
-Bx = np.cos(ro)*np.sin(teta)
-By = np.sin(ro)*np.sin(teta)
-Bz = np.cos(teta)
-print(Bx)
-print(By)
-print(Bz)
+qubit.append(float(input("a: ")))
+qubit.append(float(input("b: ")))
+qubit.append(float(input("c: ")))
+qubit.append(float(input("d: ")))
+Bloch =[]
+bloch = transformaQubit(qubit)
+
+for a in bloch:
+    print(a)
 print()
-print(teta)
-print(ro)
-print(qubit)
-lineX = np.linspace(0,Bx,100)
-lineY = np.linspace(0,By,100)
-lineZ = np.linspace(0,Bz,100)
+plt.xlabel('x')
+plt.ylabel('y')
+lineX = np.linspace(0,bloch[0],100)
+lineY = np.linspace(0,bloch[1],100)
+lineZ = np.linspace(0,bloch[2],100)
 # Plot the surface
 ax.plot_surface(x, y, z,rstride=4,cstride=4,alpha=0.3)
 ax.plot(lineX, lineY, lineZ)
 plt.pause(1)
+plt.cla()
+
+qubit = portaX(qubit)
+bloch = transformaQubit(qubit)
+lineX = np.linspace(0,bloch[0],100)
+lineY = np.linspace(0,bloch[1],100)
+lineZ = np.linspace(0,bloch[2],100)
+ax.plot_surface(x, y, z,rstride=4,cstride=4,alpha=0.3)
+ax.plot(lineX, lineY, lineZ)
 plt.xlabel('x')
 plt.ylabel('y')
+
 plt.show()
