@@ -18,12 +18,12 @@ z = np.outer(np.ones(np.size(u)), np.cos(v))
 # Plot the surface
 ax.plot_surface(x, y, z,rstride=4,cstride=4,alpha=0.3)
 
-z = np.linspace(0,(1/2),100)
-x = np.linspace(0,math.sqrt(2)/2,100) 
-y = np.linspace(0,1/2,100) 
-'''for xa in x:
-    for ya in y:
-        for za in z:
+linez = np.linspace(0,(1/2),100)
+linex = np.linspace(0,math.sqrt(2)/2,100) 
+liney = np.linspace(0,1/2,100) 
+'''for xa in linex:
+    for ya in liney:
+        for za in linez:
             a = math.sqrt((xa*xa)+(ya*ya)+(za*za))
             if (a == 1):
                 print("--------------Certo-------------")
@@ -32,13 +32,28 @@ y = np.linspace(0,1/2,100)
                     print("dentro")
                 else:
                     print("errado: "+str(a))'''
-print(x)
+print(linex)
 print()
-print(y)
+print(liney)
 print()
-print(z)
+print(linez)
 
-ax.plot(x, y, z, label='parametric curve')
+ax.plot(linex, liney, linez)
 plt.xlabel('x')
 plt.ylabel('y')
+
+
+plt.pause(0.5)
+plt.cla()
+ax.plot_surface(x, y, z,rstride=4,cstride=4,alpha=0.3)
+linez = np.linspace(0,(1/4),100)
+linex = np.linspace(0,math.sqrt(2)/2,100) 
+liney = np.linspace(0,1/2,100) 
+print(linex)
+print()
+print(liney)
+print()
+print(linez)
+ax.plot(linex, liney, linez)
+
 plt.show()
